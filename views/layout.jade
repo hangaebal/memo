@@ -1,7 +1,38 @@
 doctype html
 html
   head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    meta(charset='UTF-8')
+    title ...
+    link(rel='stylesheet', href='/css/normalize.css')
+    link(rel='stylesheet', href='/css/main.css')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js')
+    
   body
-    block content
+    section
+      header
+        img#iconImg(alt='아이콘', src='/img/icon.png')
+        p 제목 없음 - 메모장
+      nav
+        ul#mainMenuUl
+          each mainMenu in mainMenus
+            li.mainMenu
+              p= mainMenu.name
+              ul.subMenuUl.widthShortCut
+                each subMenu in subMenus
+                  if mainMenu.id == subMenu.parent_id
+
+                    if subMenu.line_yn == 'y'
+                      li.line
+                    else
+                      li.subMenu
+                        a(href=subMenu.url)
+                          p= subMenu.name
+                            span= subMenu.shortcut
+
+      article
+        block content
+    script(src='/js/main.js')
+
+
+
+    
