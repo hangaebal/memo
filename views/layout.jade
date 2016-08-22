@@ -17,7 +17,7 @@ html
           each mainMenu in mainMenus
             li.mainMenu
               p= mainMenu.name
-              ul.subMenuUl.widthShortCut
+              ul.subMenuUl(class=(mainMenu.has_shortcut == 'y'?'widthShortCut':''))
                 each subMenu in subMenus
                   if mainMenu.id == subMenu.parent_id
 
@@ -32,7 +32,6 @@ html
       article
         block content
     script(src='/js/main.js')
-
 
 
     
