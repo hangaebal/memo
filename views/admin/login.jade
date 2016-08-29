@@ -1,0 +1,17 @@
+extends ../layout_admin
+
+block content
+  br
+  br
+  br
+  form(method='post')
+    label 아이디 
+    input(name='id')
+    br
+    label 비밀번호 
+    input(name='password', type='password')
+    if errorMsg != ''
+    br
+    button(type='submit') submit
+    p(style='color:red')= errorMsg
+    hr
