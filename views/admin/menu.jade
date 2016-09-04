@@ -1,0 +1,76 @@
+extends ../layout_admin
+
+block content
+  h1 메뉴관리
+  form(method='post')
+    table.table
+      tr
+        th(width='7%') main
+        th(width='7%') sub
+        th name
+        th(width='15%') shortcut
+        th(width='15%') url
+        th(width='10%') 빈 줄
+        th(width='10%') 비활성
+        th(width='7%') 삭제
+      each mainMenu in mainMenus
+        tr.success
+          td(colspan=2)
+            input(type='hidden',name='main-id',value= mainMenu.id)
+            input.form-control(name='main-seq',value= mainMenu.seq)
+          //- td(colspan=2)= mainMenu.seq
+          //- td= mainMenu.parent_id
+          td(colspan=4)
+            input.form-control(name='main-name',value= mainMenu.name)
+          //- td= mainMenu.shortcut
+          //- td= mainMenu.url
+          //- td= mainMenu.line_yn
+          td
+            select.form-control(name='main-disable_yn')
+              option(selected=(mainMenu.disable_yn == 'y')) Y
+              option(selected=(mainMenu.disable_yn == 'n')) N
+          td
+            button.btn.btn-danger.btn-xs 삭제
+        each subMenu in subMenus
+          if mainMenu.id == subMenu.parent_id
+            tr
+              td
+                input(type='hidden',name='id',value= subMenu.id)
+              td
+                input.form-control(name='seq',value= subMenu.seq)
+              td
+                input.form-control(name='name',value= subMenu.name)
+              td
+                input.form-control(name='shortcut',value= subMenu.shortcut)
+              td
+                input.form-control(name='url',value= subMenu.url)
+              td
+                select.form-control(name='line_yn')
+                  option(selected=(subMenu.line_yn == 'y')) Y
+                  option(selected=(subMenu.line_yn == 'n')) N
+              td
+                select.form-control(name='disable_yn')
+                  option(selected=(subMenu.disable_yn == 'y')) Y
+                  option(selected=(subMenu.disable_yn == 'n')) N   
+              td
+                button.btn.btn-danger.btn-xs 삭제
+    hr
+    div.text-right
+      button.btn.btn-success 메인 추가
+      button.btn.btn-success(style='margin-left:10px') 서브 추가
+      button.btn.btn-primary(type='submit',style='margin-left:10px') 적용
+    br
+    br
+
+  script.
+    $(function(){
+      //$('select').selectpicker('refresh');
+    });
+
+  ul
+    each mainMenu in mainMenus
+      li=mainMenu.name
+      ul
+        each subMenu in subMenus
+          if mainMenu.id == subMenu.parent_id
+            li=subMenu.name
