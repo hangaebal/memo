@@ -11,10 +11,12 @@ router.get('/', function(req, res, next) {
   
 });
 
+/*로그인 뷰*/
 router.get('/login', function(req, res, next) {
   res.render('admin/login');
 });
 
+/*로그인 처리*/
 router.post('/login', function(req, res, next) {
   if (req.body.id == 'admin' && req.body.password == 'test') {
     req.session.adminId = req.body.id;
@@ -23,5 +25,14 @@ router.post('/login', function(req, res, next) {
     res.render('admin/login', {errorMsg:'잘못된 정보!!'});
   }
 });
+
+/*로그아웃*/
+router.get('/logout', function(req, res, next) {
+  req.session.destroy(function(err) {
+    res.redirect('/admin/login');
+  });
+});
+
+
 
 module.exports = router;
