@@ -106,4 +106,14 @@ router.post('/menu', function(req, res, next) {
 
 });
 
+
+/*메뉴 삭제 처리*/
+router.post('/menu/delete', function(req, res, next) {
+  var deleteSql = "UPDATE menu SET del_yn = 'y' WHERE id = ?";
+  query = connection.query(deleteSql, req.body.id, function(err, results, fields) {
+    if (err) throw err;
+      res.redirect('/admin/menu');
+  });
+});
+
 module.exports = router;
