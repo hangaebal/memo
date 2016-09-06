@@ -10,16 +10,20 @@ var connection = mysql.createConnection({
   multipleStatements: true
 });
 
-// 권한 처리
+/*관리자 권한 처리*/
 router.use('/*', function(req, res, next) {
-  if (req.session.adminId == 'admin' || req.baseUrl == '/admin/login') {
+  console.log(req.session.adminId);
+  if (typeof req.session.adminId !== 'undefined') {
+    res.locals.session = req.session;
+    next();
+  } else if (req.baseUrl == '/admin/login') {
     next();
   } else {
     res.redirect('/admin/login');
   }
 });
 
-
+/*관리자 메인 페이지*/
 router.get('/', function(req, res, next) {
   res.render('admin/index');
 });
